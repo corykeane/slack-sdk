@@ -1,0 +1,25 @@
+{
+    "name": "killswitch/slack-sdk",
+    "description": "Slack.com SDK",
+    "homepage": "https://github.com/killswitch/slack-sdk",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Josh Manders",
+            "email": "josh@joshmanders.com",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "guzzle/guzzle": "~3"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Killswitch\\Slack\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
