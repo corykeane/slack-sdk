@@ -84,6 +84,7 @@ class Incoming
 
     public function respond($response, $channel = null)
     {
-        return $this->client->chat('#'.$this->channel())->send($response);
+        $channel = is_null($channel) ? '#'.$this->channel() : $channel;
+        return $this->client->chat($channel)->send($response);
     }
 }
