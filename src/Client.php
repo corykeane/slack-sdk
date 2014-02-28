@@ -2,8 +2,8 @@
 
 use Guzzle\Http\Client as GuzzleClient;
 
-class Client
-{
+class Client {
+
     const CLIENT_NAME = 'Slack-SDK';
     const CLIENT_VERSION = '1.0.1';
     const CLIENT_URL = 'https://github.com/killswitch/slack-sdk';

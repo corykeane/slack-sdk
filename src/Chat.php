@@ -1,7 +1,7 @@
 <?php namespace Killswitch\Slack;
 
-class Chat
-{
+class Chat {
+
     protected $client;
     protected $channel;
 

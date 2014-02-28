@@ -1,7 +1,7 @@
 <?php namespace Killswitch\Slack;
 
-class User
-{
+class User {
+
     protected $data;
 
     public function __construct(array $data = array())

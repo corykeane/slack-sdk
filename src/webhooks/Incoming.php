@@ -2,8 +2,8 @@
 
 use Killswitch\Slack\Client;
 
-class Incoming
-{
+class Incoming {
+
     protected $payload;
     protected $client;
 
