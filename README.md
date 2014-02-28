@@ -19,7 +19,7 @@ $config = [
     'icon' => 'ICON' // Auto detects if it's an icon_url or icon_emoji
 ];
 
-$slack = new Slack($config);
+$slack = new Client($config);
 ```
 ## Examples ##
 
