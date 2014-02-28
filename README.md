@@ -5,19 +5,67 @@ Simple SDK for interacting with Slack.com via the webhooks system.
 
 Currently all you can do is send messages to a channel.
 
-## Usage ##
+## Configure ##
 
 ```php
 include 'vendor/autoload.php';
 
-use Killswitch\Slack\Client as Slack;
+use Killswitch\Slack\Client;
 
-$slack = new Slack('yourteam', 'webhook-key');
-$slack->setConfig(array(
-    'channel' => '#general',
-    'username' => 'Dave',
-    'icon_url' => null,
-    'icon_emoji' => ':godmode:'
-));
-$slack->say('#general', 'I am Dave!');
+$config = [
+    'token' => 'USER-API-TOKEN',
+    'team' => 'YOUR-TEAM',
+    'username' => 'BOT-NAME',
+    'icon' => 'ICON' // Auto detects if it's an icon_url or icon_emoji
+];
+
+$slack = new Slack($config);
+```
+## Examples ##
+
+What we're doing here is sending the message `Hello World!` to the `#general` channel
+```php
+$chat = $slack->chat('#general');
+$chat->send('Hello World!');
+```
+
+We can also list all users in the team
+```php
+$users = $slack->users();
+foreach ($users as $user)
+{
+    echo ($user->isAdmin() ? 'Admin' : 'User').': '.$user->name().' <'.$user->email().'>'.PHP_EOL;
+}
+```
+
+Or even listen to outgoing webhooks from Slack themselves.
+```php
+$incoming = $slack->listen();
+if ($incoming)
+{
+    switch($incoming->text())
+    {
+        case "What time is it?":
+            $incoming->respond("It is currently ".date('g:m A T'));
+        break;
+        default:
+            $incoming->respond("I don't understand what you're asking.");
+        break;
+    }
+}
+```
+
+For testing reasons you can pass `Client::listen()` an array of the payload to simulate which will then ignore any `$_POST` values and use the `$payload` you supplied instead.
+```php
+$payload = [
+    'token' => 'YNgeXsCXyWgAMfCvjc7NUUpz',
+    'team_id' => 'T0001',
+    'channel_id' => 'C2147483705',
+    'channel_name' => 'test',
+    'timestamp' => '1355517523.000005',
+    'user_id' => 'U2147483697',
+    'user_name' => 'Steve',
+    'text' => 'googlebot: What is the air-speed velocity of an unladen swallow?'
+];
+$incoming = $slack->listen($payload);
 ```

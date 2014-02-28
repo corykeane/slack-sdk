@@ -5,20 +5,24 @@ use Guzzle\Http\Client as GuzzleClient;
 class Client
 {
     const CLIENT_NAME = 'Slack-SDK';
-    const CLIENT_VERSION = '1.0';
+    const CLIENT_VERSION = '1.0.1';
     const CLIENT_URL = 'https://github.com/killswitch/slack-sdk';
-    private $client;
-    private $subdomain;
-    private $token;
-    private $debug = false;
-    private $config = array();
+    const API_URL = 'https://slack.com/api';
+    const DEFAULT_CHANNEL = '#random';
+    public $config = array();
+    public $client;
+    public $debug = true;
 
-    public function __construct($subdomain, $token)
+    public function __construct(array $config = array())
     {
-        $this->subdomain = $subdomain;
-        $this->token = $token;
-        $this->client = new GuzzleClient('https://'.$subdomain.'.slack.com');
-        $this->client->setDefaultOption('query', array('token' => $token));
+        $this->config = array(
+            'token' => $config['token'],
+            'username' => $config['username'],
+            'icon_url' => ((strpos($config['icon'], 'http') !== false) ? $config['icon'] : null),
+            'icon_emoji' => ((strpos($config['icon'], 'http') !== false) ? null : $config['icon']),
+            'parse' => $config['parse']
+        );
+        $this->client = new GuzzleClient(self::API_URL);
         $this->client->setUserAgent($this->setUserAgent());
     }
 
@@ -33,41 +37,56 @@ class Client
         return $this;
     }
 
-    public function getSubdomain()
-    {
-        return $this->subdomain;
-    }
-
-    public function getToken()
-    {
-        return $this->token;
-    }
-
     public function setConfig($config = array())
     {
         $this->config = $config;
         return $this;
     }
 
-    public function getConfig()
+    public function getConfig($keys = null)
     {
+        if (!is_null($keys) && is_array($keys))
+        {
+            $config = array();
+            foreach ($this->config as $key => $value)
+            {
+                if (in_array($key, $keys))
+                {
+                    $config[$key] = $value;
+                }
+            }
+            return $config;
+        }
         return $this->config;
     }
 
-    public function say($channel, $message)
+    public function request($endpoint = null, array $query = array())
     {
-        $payload = $this->buildPayload(array('text' => $message, 'channel' => $channel));
-        $request = $this->request($payload)->send();
-        if ($this->debug) echo $this->config['username'].' ['.$channel.']: '.$message.PHP_EOL;
+        return $this->client->get($endpoint, array(), array('query' => $query), array('debug' => $this->debug));
     }
 
-    private function buildPayload($data)
+    public function listen($simulate = false)
     {
-        return json_encode(array_merge($data, $this->config));
+        if (empty($_POST) && !$simulate) return false;
+        $hook = new Webhooks\Incoming($this);
+        if (is_array($simulate)) return $hook->simulatePayload($simulate);
+        return $hook;
     }
 
-    private function request($payload)
+    public function chat($channel = self::DEFAULT_CHANNEL)
     {
-        return $this->client->post('/services/hooks/incoming-webhook', array(), $payload, array('debug' => $this->debug));
+        return new Chat($this, $channel);
+    }
+
+    public function users()
+    {
+        $query = $this->getConfig(['token']);
+        $response = $this->request('users.list', $query)->send()->json();
+        $users = array();
+        foreach ($response['members'] as $member)
+        {
+            $users[] = new User($member);
+        }
+        return $users;
     }
 }
