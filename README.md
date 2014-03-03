@@ -1,9 +1,7 @@
 slack-sdk
 =========
 
-Simple SDK for interacting with Slack.com via the webhooks system.
-
-Currently all you can do is send messages to a channel.
+Simple SDK for interacting with Slack.com via the API and webhooks.
 
 ## Configure ##
 
