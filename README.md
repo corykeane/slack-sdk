@@ -12,7 +12,7 @@ You can install slack-sdk by using `composer require threadmeup/slack-sdk dev-ma
 ```php
 include 'vendor/autoload.php';
 
-use Killswitch\Slack\Client;
+use ThreadMeUp\Slack\Client;
 
 $config = [
     'token' => 'USER-API-TOKEN',
