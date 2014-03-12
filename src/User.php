@@ -1,4 +1,4 @@
-<?php namespace Killswitch\Slack;
+<?php namespace ThreadMeUp\Slack;
 
 class User {
 

@@ -1,6 +1,6 @@
-<?php namespace Killswitch\Slack\Webhooks;
+<?php namespace ThreadMeUp\Slack\Webhooks;
 
-use Killswitch\Slack\Client;
+use ThreadMeUp\Slack\Client;
 
 class Incoming {
 

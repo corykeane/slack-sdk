@@ -3,7 +3,11 @@ slack-sdk
 
 Simple SDK for interacting with Slack.com via the API and webhooks.
 
-## Configure ##
+## Install
+
+You can install slack-sdk by using `composer require threadmeup/slack-sdk dev-master`.
+
+## Configure
 
 ```php
 include 'vendor/autoload.php';
@@ -19,7 +23,7 @@ $config = [
 
 $slack = new Client($config);
 ```
-## Examples ##
+## Examples
 
 What we're doing here is sending the message `Hello World!` to the `#general` channel
 ```php

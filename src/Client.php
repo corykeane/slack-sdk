@@ -1,12 +1,14 @@
-<?php namespace Killswitch\Slack;
+<?php namespace ThreadMeUp\Slack;
 
 use Guzzle\Http\Client as GuzzleClient;
+
+use Webhooks\Incoming as IncomingWebhook;
 
 class Client {
 
     const CLIENT_NAME = 'Slack-SDK';
-    const CLIENT_VERSION = '1.0.1';
-    const CLIENT_URL = 'https://github.com/killswitch/slack-sdk';
+    const CLIENT_VERSION = '1.1.0';
+    const CLIENT_URL = 'https://github.com/threadmeup/slack-sdk';
     const API_URL = 'https://slack.com/api';
     const DEFAULT_CHANNEL = '#random';
     public $config = array();
@@ -68,7 +70,7 @@ class Client {
     public function listen($simulate = false)
     {
         if (empty($_POST) && !$simulate) return false;
-        $hook = new Webhooks\Incoming($this);
+        $hook = new IncomingWebhook($this);
         if (is_array($simulate)) return $hook->simulatePayload($simulate);
         return $hook;
     }
