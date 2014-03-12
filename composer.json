@@ -1,7 +1,7 @@
 {
     "name": "threadmeup/slack-sdk",
     "description": "Slack.com SDK",
-    "tags": ["slack", "threadmeup", "api", "sdk", "slack-sdk", "slack-api"],
+    "keywords": ["slack", "threadmeup", "api", "sdk", "slack-sdk", "slack-api"],
     "homepage": "https://github.com/threadmeup/slack-sdk",
     "license": "MIT",
     "authors": [
