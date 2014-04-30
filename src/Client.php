@@ -2,7 +2,7 @@
 
 use Guzzle\Http\Client as GuzzleClient;
 
-use Webhooks\Incoming as IncomingWebhook;
+use ThreadMeUp\Slack\Webhooks\Incoming as IncomingWebhook;
 
 class Client {
 
