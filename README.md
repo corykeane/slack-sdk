@@ -1,6 +1,8 @@
 slack-sdk
 =========
 
+[![Latest Stable Version](https://poser.pugx.org/threadmeup/slack-sdk/v/stable.svg)](https://packagist.org/packages/threadmeup/slack-sdk) [![Total Downloads](https://poser.pugx.org/threadmeup/slack-sdk/downloads.svg)](https://packagist.org/packages/threadmeup/slack-sdk) [![Latest Unstable Version](https://poser.pugx.org/threadmeup/slack-sdk/v/unstable.svg)](https://packagist.org/packages/threadmeup/slack-sdk) [![License](https://poser.pugx.org/threadmeup/slack-sdk/license.svg)](https://packagist.org/packages/threadmeup/slack-sdk)
+
 Simple SDK for interacting with Slack.com via the API and webhooks.
 
 ## Install
