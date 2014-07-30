@@ -19,7 +19,7 @@ class Chat {
         $response = new Response($request);
         if ($this->client->debug)
         {
-            if (!$response->isOkay())
+            if ($response->isOkay())
             {
                 echo $this->client->config['username'].' ['.$this->channel.']: '.$message.PHP_EOL;
                 return true;
