@@ -29,6 +29,7 @@ class Response
     {
         $isOkay = $this->response->ok;
         if (!$isOkay) $this->error = $this->errorTypes[$this->response->error];
+        return $isOkay;
     }
 
     public function getError()
