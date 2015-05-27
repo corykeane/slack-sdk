@@ -21,12 +21,13 @@ class Chat {
         {
             if ($response->isOkay())
             {
-                echo $this->client->config['username'].' ['.$this->channel.']: '.$message.PHP_EOL;
+                //echo $this->client->config['username'].' ['.$this->channel.']: '.$message.PHP_EOL;
                 return true;
             }
             else
             {
                 echo '[Error] '.$response->getError().'.'.PHP_EOL;
+		echo '[Query] '.var_export($this->client->request('chat.postMessage', $query)->getQuery(), true);
                 return false;
             }
         }
