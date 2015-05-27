@@ -11,10 +11,10 @@ class Chat {
         $this->channel = $channel;
     }
 
-    public function send($message = null)
+    public function send($message = null, $attachments = null)
     {
         $config = $this->client->getConfig();
-        $query = array_merge(array('text' => $message, 'channel' => $this->channel), $config);
+        $query = array_merge(array('text' => $message, 'channel' => $this->channel, 'attachments' => json_encode($attachments)), $config);
         $request = $this->client->request('chat.postMessage', $query)->send();
         $response = new Response($request);
         if ($this->client->debug)
