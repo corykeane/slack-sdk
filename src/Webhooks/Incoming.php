@@ -21,7 +21,7 @@ class Incoming {
 
     public function getPayload($key = null)
     {
-        return is_null($key) ? $this->payload : $this->payload[$key];
+        return is_null($key) ? $this->payload : @$this->payload[$key];
     }
 
     public function token()
@@ -41,7 +41,7 @@ class Incoming {
 
     public function channel()
     {
-        return $this->getPayload('channel_name');
+        return $this->getPayload('channel_id');
     }
 
     public function timestamp()
@@ -84,7 +84,7 @@ class Incoming {
 
     public function respond($response, $channel = null)
     {
-        $channel = is_null($channel) ? '#'.$this->channel() : $channel;
+        $channel = is_null($channel) ? $this->channel() : $channel;
         return $this->client->chat($channel)->send($response);
     }
 }
