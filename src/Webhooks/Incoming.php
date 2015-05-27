@@ -71,8 +71,13 @@ class Incoming {
 
     public function trigger()
     {
-        $words = $this->words();
-        return substr($words[0], 0, -1);
+        if ($this->getPayload('trigger_word')) {
+            return $this->getPayload('trigger_word');
+        }
+        else if ($this->getPayload('command')) {
+            return $this->getPayload('command');
+        }
+        return "";
     }
 
     public function text()

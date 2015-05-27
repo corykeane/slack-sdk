@@ -27,7 +27,7 @@ class Chat {
             else
             {
                 echo '[Error] '.$response->getError().'.'.PHP_EOL;
-		echo '[Query] '.var_export($this->client->request('chat.postMessage', $query)->getQuery(), true);
+                echo '[Query] '.var_export($this->client->request('chat.postMessage', $query)->getQuery(), true);
                 return false;
             }
         }
