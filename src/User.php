@@ -84,6 +84,21 @@ class User {
         return $this->data['is_primary_owner'];
     }
 
+    public function isUltraRestricted()
+    {
+        return $this->data['is_ultra_restricted'];
+    }
+
+    public function isRestricted()
+    {
+        return $this->data['is_restricted'];
+    }
+
+    public function isBot()
+    {
+        return $this->data['is_bot'];
+    }
+
     public function hasFiles()
     {
         return $this->data['has_files'];
