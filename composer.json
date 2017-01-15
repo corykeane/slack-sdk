@@ -1,26 +1,13 @@
 {
     "name": "corykeane/slack-sdk",
-    "description": "Slack.com SDK",
-    "keywords": ["slack", "threadmeup", "api", "sdk", "slack-sdk", "slack-api"],
-    "homepage": "https://github.com/threadmeup/slack-sdk",
+    "description": "Slack SDK for PHP",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Josh Manders",
-            "email": "josh@threadmeup.com",
-            "homepage": "https://www.threadmeup.com",
-            "role": "developer"
-        }
-    ],
     "require": {
         "guzzle/guzzle": "~3"
     },
-    "require-dev": {
-
-    },
     "autoload": {
         "psr-4": {
-            "ThreadMeUp\\Slack\\": "src/"
+            "CoryKeane\\Slack\\": "src/"
         }
     },
     "minimum-stability": "stable"
