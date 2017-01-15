@@ -1,4 +1,4 @@
-<?php namespace ThreadMeUp\Slack;
+<?php namespace CoryKeane\Slack;
 
 use Guzzle\Http\Message\Response as GuzzleResponse;
 
