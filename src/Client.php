@@ -1,14 +1,14 @@
-<?php namespace ThreadMeUp\Slack;
+<?php namespace CoryKeane\Slack;
 
 use Guzzle\Http\Client as GuzzleClient;
 
-use ThreadMeUp\Slack\Webhooks\Incoming as IncomingWebhook;
+use CoryKeane\Slack\Webhooks\Incoming as IncomingWebhook;
 
 class Client {
 
     const CLIENT_NAME = 'Slack-SDK';
     const CLIENT_VERSION = '1.1.0';
-    const CLIENT_URL = 'https://github.com/threadmeup/slack-sdk';
+    const CLIENT_URL = 'https://github.com/corykeane/slack-sdk';
     const API_URL = 'https://slack.com/api';
     const DEFAULT_CHANNEL = '#random';
     public $config = array();
