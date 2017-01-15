@@ -1,6 +1,6 @@
-<?php namespace ThreadMeUp\Slack\Webhooks;
+<?php namespace CoryKeane\Slack\Webhooks;
 
-use ThreadMeUp\Slack\Client;
+use CoryKeane\Slack\Client;
 
 class Incoming {
 
