@@ -1,31 +1,34 @@
 <?php namespace CoryKeane\Slack;
 
-use Guzzle\Http\Client as GuzzleClient;
+use GuzzleHttp\Client as GuzzleClient;
 
 use CoryKeane\Slack\Webhooks\Incoming as IncomingWebhook;
 
-class Client {
-
+class Client
+{
     const CLIENT_NAME = 'Slack-SDK';
     const CLIENT_VERSION = '1.1.0';
     const CLIENT_URL = 'https://github.com/corykeane/slack-sdk';
     const API_URL = 'https://slack.com/api';
     const DEFAULT_CHANNEL = '#random';
-    public $config = array();
+    public $config = [];
+
+    /**
+     * @var GuzzleClient
+     */
     public $client;
     public $debug = true;
 
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
         $this->config = array(
             'token' => $config['token'],
             'username' => $config['username'],
-            'icon_url' => ((strpos($config['icon'], 'http') !== false) ? $config['icon'] : null),
-            'icon_emoji' => ((strpos($config['icon'], 'http') !== false) ? null : $config['icon']),
-            'parse' => $config['parse']
+            'icon_url' => (strpos($config['icon'], 'http') !== false) ? $config['icon'] : null,
+            'icon_emoji' => (strpos($config['icon'], 'http') !== false) ? null : $config['icon'],
+            'parse' => $config['parse'],
         );
-        $this->client = new GuzzleClient(self::API_URL);
-        $this->client->setUserAgent($this->setUserAgent());
+        $this->client = new GuzzleClient(['base_uri' => self::API_URL, 'timeout' => 2.0]);
     }
 
     public function setUserAgent()
@@ -39,7 +42,7 @@ class Client {
         return $this;
     }
 
-    public function setConfig($config = array())
+    public function setConfig($config = [])
     {
         $this->config = $config;
         return $this;
@@ -47,13 +50,10 @@ class Client {
 
     public function getConfig($keys = null)
     {
-        if (!is_null($keys) && is_array($keys))
-        {
-            $config = array();
-            foreach ($this->config as $key => $value)
-            {
-                if (in_array($key, $keys))
-                {
+        if (!is_null($keys) && is_array($keys)) {
+            $config = [];
+            foreach ($this->config as $key => $value) {
+                if (in_array($key, $keys)) {
                     $config[$key] = $value;
                 }
             }
@@ -62,16 +62,20 @@ class Client {
         return $this->config;
     }
 
-    public function request($endpoint = null, array $query = array())
+    public function request($endpoint = null, array $query = [])
     {
-        return $this->client->get($endpoint, array(), array('query' => $query), array('debug' => $this->debug));
+        return $this->client->request('GET', $endpoint, ['query' => $query, 'debug' => true,]);
     }
 
     public function listen($simulate = false)
     {
-        if (empty($_POST) && !$simulate) return false;
+        if (empty($_POST) && !$simulate) {
+            return false;
+        }
         $hook = new IncomingWebhook($this);
-        if (is_array($simulate)) return $hook->simulatePayload($simulate);
+        if (is_array($simulate)) {
+            return $hook->simulatePayload($simulate);
+        }
         return $hook;
     }
 
@@ -82,11 +86,10 @@ class Client {
 
     public function users()
     {
-        $query = $this->getConfig(array('token'));
+        $query = $this->getConfig(['token']);
         $response = $this->request('users.list', $query)->send()->json();
-        $users = array();
-        foreach ($response['members'] as $member)
-        {
+        $users = [];
+        foreach ($response['members'] as $member) {
             $users[] = new User($member);
         }
         return $users;
