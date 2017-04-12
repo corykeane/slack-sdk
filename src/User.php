@@ -1,7 +1,9 @@
-<?php namespace CoryKeane\Slack;
+<?php
 
-class User {
+namespace CoryKeane\Slack;
 
+class User
+{
     protected $data;
 
     public function __construct(array $data = array())

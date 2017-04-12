@@ -2,8 +2,8 @@
 
 use CoryKeane\Slack\Client;
 
-class Incoming {
-
+class Incoming
+{
     protected $payload;
     protected $client;
 
@@ -73,8 +73,7 @@ class Incoming {
     {
         if ($this->getPayload('trigger_word')) {
             return $this->getPayload('trigger_word');
-        }
-        else if ($this->getPayload('command')) {
+        } elseif ($this->getPayload('command')) {
             return $this->getPayload('command');
         }
         return "";
