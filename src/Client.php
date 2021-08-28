@@ -1,6 +1,7 @@
 <?php namespace CoryKeane\Slack;
 
-use Guzzle\Http\Client as GuzzleClient;
+//use Guzzle\Http\Client as GuzzleClient;
+use GuzzleHttp\Client as GuzzleClient;
 
 use CoryKeane\Slack\Webhooks\Incoming as IncomingWebhook;
 
@@ -24,8 +25,8 @@ class Client {
             'icon_emoji' => ((strpos($config['icon'], 'http') !== false) ? null : $config['icon']),
             'parse' => $config['parse']
         );
-        $this->client = new GuzzleClient(self::API_URL);
-        $this->client->setUserAgent($this->setUserAgent());
+        $this->client = new GuzzleClient(); //['base_uri' => self::API_URL]);
+       // $this->client->setUserAgent($this->setUserAgent());
     }
 
     public function setUserAgent()
@@ -64,7 +65,7 @@ class Client {
 
     public function request($endpoint = null, array $query = array())
     {
-        return $this->client->get($endpoint, array(), array('query' => $query), array('debug' => $this->debug));
+        return $this->client->request("GET", self::API_URL . "/" . $endpoint, array('query' => $query), array('debug' => $this->debug));
     }
 
     public function listen($simulate = false)

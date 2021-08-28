@@ -1,5 +1,7 @@
 <?php namespace CoryKeane\Slack;
 
+use \Exception; 
+
 class Chat {
 
     protected $client;
@@ -14,22 +16,17 @@ class Chat {
     public function send($message = null, $attachments = null)
     {
         $config = $this->client->getConfig();
-        $query = array_merge(array('text' => $message, 'channel' => $this->channel, 'attachments' => json_encode($attachments)), $config);
-        $request = $this->client->request('chat.postMessage', $query)->send();
+        $query = array('text' => $message, 'channel' => $this->channel, 'attachments' => (!empty($attachments)) ? json_encode($attachments) : null) + $config;
+    
+        $request = $this->client->request('chat.postMessage', $query); 
+
         $response = new Response($request);
-        if ($this->client->debug)
+
+        if(!$this->client->debug || $response->isOkay())
         {
-            if ($response->isOkay())
-            {
-                //echo $this->client->config['username'].' ['.$this->channel.']: '.$message.PHP_EOL;
-                return true;
-            }
-            else
-            {
-                echo '[Error] '.$response->getError().'.'.PHP_EOL;
-                echo '[Query] '.var_export($this->client->request('chat.postMessage', $query)->getQuery(), true);
-                return false;
-            }
+            return $response->isOkay();
         }
+
+        throw new Exception($response->getError() . " (" . var_export($this->client->request('chat.postMessage', $query)->getQuery(), true) . ")");
     }
 }
