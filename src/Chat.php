@@ -14,9 +14,14 @@ class Chat {
     public function send($message = null, $attachments = null)
     {
         $config = $this->client->getConfig();
-        $query = array_merge(array('text' => $message, 'channel' => $this->channel, 'attachments' => json_encode($attachments)), $config);
-        $request = $this->client->request('chat.postMessage', $query)->send();
+        $query = array('text' => $message, 'channel' => $this->channel, 'attachments' => (!empty($attachments)) ? json_encode($attachments) : null) + $config;
+    
+        $request = $this->client->request('chat.postMessage', $query); 
+
         $response = new Response($request);
+
+        pre($response->isOkay()); die();
+
         if ($this->client->debug)
         {
             if ($response->isOkay())
