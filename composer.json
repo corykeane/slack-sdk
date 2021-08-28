@@ -3,7 +3,7 @@
     "description": "Slack SDK for PHP",
     "license": "MIT",
     "require": {
-        "guzzle/guzzle": "~3"
+        "guzzlehttp/guzzle": "^7.3"
     },
     "autoload": {
         "psr-4": {
