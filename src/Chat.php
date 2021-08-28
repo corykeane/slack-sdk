@@ -1,5 +1,7 @@
 <?php namespace CoryKeane\Slack;
 
+use \Exception; 
+
 class Chat {
 
     protected $client;
@@ -20,19 +22,11 @@ class Chat {
 
         $response = new Response($request);
 
-        if ($this->client->debug)
+        if(!$this->client->debug || $response->isOkay())
         {
-            if ($response->isOkay())
-            {
-                //echo $this->client->config['username'].' ['.$this->channel.']: '.$message.PHP_EOL;
-                return true;
-            }
-            else
-            {
-                echo '[Error] '.$response->getError().'.'.PHP_EOL;
-                echo '[Query] '.var_export($this->client->request('chat.postMessage', $query)->getQuery(), true);
-                return false;
-            }
+            return $response->isOkay();
         }
+
+        throw new Exception($response->getError() . " (" . var_export($this->client->request('chat.postMessage', $query)->getQuery(), true) . ")");
     }
 }
