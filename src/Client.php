@@ -1,8 +1,6 @@
 <?php namespace CoryKeane\Slack;
 
-//use Guzzle\Http\Client as GuzzleClient;
 use GuzzleHttp\Client as GuzzleClient;
-
 use CoryKeane\Slack\Webhooks\Incoming as IncomingWebhook;
 
 class Client {

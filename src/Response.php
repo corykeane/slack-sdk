@@ -31,8 +31,6 @@ class Response
         if(!$this->response->ok)
         {
             $this->error = $this->errorTypes[$this->response->error] ?? "Unidentified error (".$this->response->error.")";
-        
-            pre($this->error); die();
         }
 
         return $this->response->ok;
@@ -43,3 +41,4 @@ class Response
         return $this->error;
     }
 }
+?>
