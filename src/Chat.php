@@ -20,8 +20,6 @@ class Chat {
 
         $response = new Response($request);
 
-        pre($response->isOkay()); die();
-
         if ($this->client->debug)
         {
             if ($response->isOkay())
